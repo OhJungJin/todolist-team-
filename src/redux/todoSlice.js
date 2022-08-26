@@ -7,7 +7,7 @@ const todoSlice = createSlice({
 			id,
 			title,
 			content,
-			checked,
+			done,
 		},
 	],
 	reducers: {},
