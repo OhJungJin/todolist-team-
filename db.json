@@ -1,0 +1,39 @@
+{
+    "todos": [
+      {
+        "id": 1,
+        "title": "json-server",
+        "content": "json-server를 배워봅시다."
+        ,"Done" : false
+      },
+      {
+        "id": 2,
+        "title": "리액트",
+        "content": "React 를 배워봅시다."
+        ,"Done" : false
+      },
+      {
+        "id": 3,
+        "title": "라우터",
+        "content": "라우터 를 배워봅시다."
+        ,"Done" : false
+      },
+      {
+        "id": 4,
+        "title": "axios",
+        "content": "axios 를 배워봅시다."
+        ,"Done" : false
+      }
+    ],
+
+    "comment" : [
+        {
+            "id" : 1,
+            "title": "리액트",
+            "name": "태권",
+            "comment": "첫번째 댓글",
+            "desc" : "첫번째 댓글을 작성해봤어요" 
+            ,"Done" : false 
+        }
+    ]
+  }
