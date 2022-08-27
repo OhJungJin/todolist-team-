@@ -1,15 +1,30 @@
+import Layout from "components/Layout.js/Layout";
 import React, { useState } from "react";
 import Comment from "components/Comment/Comment";
 import { useParams } from "react-router-dom";
-
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { loadCommentList } from "redux/commentSlice";
 
 // import { useNavigate,useParams } from "react-router-dom";
 export default function Detail() {
-
   const [isComment, setComment] = useState(true);
+  const dispatch = useDispatch();
   // 브라우저 라우터 씌워주면 주석처리 해제 해주세요
   // const navigate =useNavigate()
   // const param = useParams()
+
+  const loadCommnet = async () => {
+    const res = await axios.get(
+      "https://teamhomwork.herokuapp.com/comment/?cardId=4"
+    );
+    dispatch(loadCommentList(res.data));
+  };
+
+  React.useEffect(() => {
+    loadCommnet();
+  }, []);
+
   return (
     <div>
       {isComment === true ? (
@@ -26,11 +41,10 @@ export default function Detail() {
               X
             </button>
           </div>
-          <div className="h-1/4 w-3/4 mx-auto border-4 border-sky-600 rounded-lg grid content-between">
+          <div className="grid content-between h-48 w-3/4 mx-auto border-4 border-sky-600 border-solid rounded-lg ">
             <div>
               <p className="mt-4">본문 내용 입니다</p>
             </div>
-
             <div className="flex justify-end space-x-5 mr-4 mb-4">
               {/* 이 버튼을 누루면 댓글창이 사라져요 */}
               <button
