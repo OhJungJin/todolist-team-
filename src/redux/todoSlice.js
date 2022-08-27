@@ -3,7 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 const todoSlice = createSlice({
   name: "todos",
   initialState: {
-    list: [],
+    list: [
+      {
+        id: 1,
+        title: "json-server",
+        content: "json-server를 배워봅시다.",
+        done: false,
+        createdAt: "",
+      },
+    ],
   },
   reducers: {
     loadTodoList: (state, action) => {
