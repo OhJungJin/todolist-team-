@@ -1,8 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-function Comment() {
+function Comment({ userId }) {
   const commentList = useSelector(state => state.comments.list);
-  console.log(commentList);
 
   return (
     <div className="container mx-auto h-full">
