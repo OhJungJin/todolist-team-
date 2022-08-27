@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import axios from "axios";
 
@@ -24,6 +25,13 @@ function App() {
 			<Route path="/detail/:id" element={<Detail />}></Route>
 		</Routes>
 	);
+=======
+import "./App.css";
+import Comment from "components/Comment/Comment";
+import Detail from "views/Detail";
+function App() {
+  return <div className="App"></div>;
+>>>>>>> Comment
 }
 
 export default App;
