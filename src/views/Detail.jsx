@@ -1,17 +1,11 @@
-<<<<<<< HEAD
-import Layout from "components/Layout.js/Layout";
-import React from "react";
-=======
 import React, { useState } from "react";
 import Comment from "components/Comment/Comment";
 import { useParams } from "react-router-dom";
->>>>>>> Comment
+
 
 // import { useNavigate,useParams } from "react-router-dom";
 export default function Detail() {
-<<<<<<< HEAD
-	return <Layout>Detail</Layout>;
-=======
+
   const [isComment, setComment] = useState(true);
   // 브라우저 라우터 씌워주면 주석처리 해제 해주세요
   // const navigate =useNavigate()
@@ -86,5 +80,4 @@ export default function Detail() {
       )}
     </div>
   );
->>>>>>> Comment
 }
