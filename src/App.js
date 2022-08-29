@@ -7,22 +7,22 @@ import AddTodoList from "views/AddTodoList";
 import Detail from "views/Detail";
 
 function App() {
-  const loadbucket = async () => {
-    const res = await axios.get("https://teamhomwork.herokuapp.com/comment");
-    return res.data;
-  };
+	const loadbucket = async () => {
+		const res = await axios.get("https://teamhomwork.herokuapp.com/comment");
+		return res.data;
+	};
 
-  React.useEffect(() => {
-    loadbucket();
-  }, []);
+	React.useEffect(() => {
+		loadbucket();
+	}, []);
 
-  return (
-    <Routes>
-      <Route path="/" element={<Home />}></Route>
-      <Route path="/add" element={<AddTodoList />}></Route>
-      <Route path="/detail/:id" element={<Detail />}></Route>
-    </Routes>
-  );
+	return (
+		<Routes>
+			<Route path="/" element={<Home />}></Route>
+			<Route path="/add" element={<AddTodoList />}></Route>
+			<Route path="/detail/:id" element={<Detail />}></Route>
+		</Routes>
+	);
 }
 
 export default App;

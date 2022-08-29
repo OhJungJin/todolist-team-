@@ -3,12 +3,11 @@ import axios from "axios";
 
 export const fetchTodo = createAsyncThunk(
 	"get/todo",
-	async (arg, { rejectWithValue }) => {
+	async ({ rejectWithValue }) => {
 		try {
 			const response = await axios.get(
 				"https://teamhomwork.herokuapp.com/todos"
 			);
-			console.log(response);
 			return response;
 		} catch (err) {
 			return rejectWithValue(err.response.data);
@@ -18,17 +17,7 @@ export const fetchTodo = createAsyncThunk(
 
 const todoSlice = createSlice({
 	name: "todos",
-	initialState: {
-		// list: [
-		// 	{
-		// 		id: 1,
-		// 		title: "json-server",
-		// 		content: "json-server를 배워봅시다.",
-		// 		done: false,
-		// 		createdAt: "",
-		// 	},
-		// ],
-	},
+	initialState: {},
 	reducers: {
 		loadTodoList: (state, action) => {
 			state = action.payload;
@@ -57,7 +46,7 @@ const todoSlice = createSlice({
 		},
 		[fetchTodo.fulfilled]: (state, { payload }) => {
 			state.loading = false;
-			state.data = payload;
+			state.data = payload.data;
 			state.isSuccess = true;
 		},
 		[fetchTodo.rejected]: (state, { payload }) => {
