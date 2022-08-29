@@ -1,28 +1,48 @@
 import Layout from "components/Layout.js/Layout";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Comment from "components/Comment/Comment";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { loadCommentList } from "redux/commentSlice";
+import { updateTodoList } from "redux/todoSlice";
 
 export default function Detail() {
-  const [isComment, setComment] = useState(true);
-  const dispatch = useDispatch();
-
   const navigate = useNavigate();
-  const param = useParams(3);
+  const param = useParams("");
 
   const todoList = useSelector(state => state.todos.list);
+
   const myTodo = todoList.filter(x => {
     return x.id === parseInt(param.id);
   });
+  const [isComment, setComment] = useState(false);
+  const [iscontent, setcontent] = useState(true);
+  const [updateContent, setupdateContent] = useState(myTodo[0].content);
+  const dispatch = useDispatch();
 
   const loadCommnet = async () => {
     const res = await axios.get(
       `https://teamhomwork.herokuapp.com/comment/?cardId=${param.id}`
     );
+
     dispatch(loadCommentList(res.data));
+  };
+
+  const updateTodoContent = async () => {
+    const data = {
+      id: param.id,
+      title: myTodo[0].title,
+      done: myTodo[0].done,
+      content: updateContent,
+    };
+
+    const res = await axios.patch(
+      `https://teamhomwork.herokuapp.com/Todos/${param.id}`,
+      data
+    );
+    console.log(res.data);
+    dispatch(updateTodoList(res.data));
   };
 
   React.useEffect(() => {
@@ -35,7 +55,14 @@ export default function Detail() {
         <div className="container mx-auto h-screen">
           <div className="flex justify-around p-1 w-3/5 mx-auto my-4">
             <p className="w-3/5 text-2xl">{myTodo[0].title}</p>
-            <button className="w-1/5 border-2">수정하기</button>
+            <button
+              className="w-1/5 border-2"
+              onClick={() => {
+                setcontent(!iscontent);
+              }}
+            >
+              {iscontent === true ? "수정하기" : "수정취소"}
+            </button>
             <button
               className="w-1/5 text-2xl font-bold"
               onClick={() => {
@@ -46,9 +73,30 @@ export default function Detail() {
             </button>
           </div>
           <div className="grid content-between h-48 w-3/4 mx-auto border-4 border-sky-600 border-solid rounded-lg ">
-            <div>
-              <p className="mt-4">{myTodo[0].content}</p>
-            </div>
+            {iscontent === true ? (
+              <div>
+                <p className="mt-4">{myTodo[0].content}</p>
+              </div>
+            ) : (
+              <div>
+                <input
+                  className="mt-4"
+                  value={updateContent}
+                  onChange={event => {
+                    setupdateContent(event.target.value);
+                  }}
+                />
+                <button
+                  onClick={() => {
+                    updateTodoContent();
+                    setcontent(!iscontent);
+                  }}
+                >
+                  수정 완료
+                </button>
+              </div>
+            )}
+
             <div className="flex justify-end space-x-5 mr-4 mb-4">
               {/* 이 버튼을 누루면 댓글창이 사라져요 */}
               <button
@@ -70,14 +118,41 @@ export default function Detail() {
         // false
         <div className="container mx-auto h-screen">
           <div className="flex justify-around p-4 w-3/5 mx-auto my-4">
-            <p className="w-3/5 text-2xl">title</p>
-            <button className="w-1/5 border-2">수정하기</button>
+            <p className="w-3/5 text-2xl">{myTodo[0].title}</p>
+            <button
+              className="w-1/5 border-2"
+              onClick={() => {
+                setcontent(!iscontent);
+              }}
+            >
+              {iscontent === true ? "수정하기" : "수정취소"}
+            </button>
             <button className="w-1/5 text-2xl font-bold">X</button>
           </div>
           <div className="h-2/3 w-3/4 mx-auto border-4 border-sky-600 rounded-lg grid content-between">
-            <div>
-              <p className="mt-4">aaa</p>
-            </div>
+            {iscontent === true ? (
+              <div>
+                <p className="mt-4">{myTodo[0].content}</p>
+              </div>
+            ) : (
+              <div>
+                <input
+                  className="mt-4"
+                  value={updateContent}
+                  onChange={event => {
+                    setupdateContent(event.target.value);
+                  }}
+                />
+                <button
+                  onClick={() => {
+                    updateTodoContent();
+                    setcontent(!iscontent);
+                  }}
+                >
+                  수정 완료
+                </button>
+              </div>
+            )}
 
             <div className="flex justify-end space-x-5 mr-4 mb-4">
               {/* 이버튼 누르면 댓글창이 나와요 */}
