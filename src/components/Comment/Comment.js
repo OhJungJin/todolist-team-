@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import {Link} from 'react-router-dom'
 function Comment({ userId }) {
   const commentList = useSelector(state => state.comments.list);
 
@@ -31,7 +32,7 @@ function Comment({ userId }) {
                 </div>
                 <div className="flex items-center justify-center gap-4 mr-3">
                   {/* 버튼기능 구현 */}
-                  <button>수정</button>
+                  <Link to="/editComment">수정</Link>
                   <button>삭제</button>
                 </div>
               </div>
