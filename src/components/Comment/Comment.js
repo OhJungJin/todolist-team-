@@ -6,7 +6,10 @@ function Comment({ userId }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [commentCount] = useState(4);
   const commentLength = commentList.length;
-  const maxPage = Math.ceil(commentLength / commentCount);
+  const maxPage =
+    Math.ceil(commentLength / commentCount) === 0
+      ? 1
+      : Math.ceil(commentLength / commentCount);
   const lastIndex = currentPage * commentCount;
   const firstIndex = lastIndex - commentCount;
 
@@ -37,7 +40,7 @@ function Comment({ userId }) {
           >
             이전댓글
           </button>
-          <div>{`${currentPage}/${maxPage}`}</div>
+          <div>{`${currentPage}/${maxPage} `}</div>
           <button
             disabled={currentPage >= maxPage}
             onClick={() => {
