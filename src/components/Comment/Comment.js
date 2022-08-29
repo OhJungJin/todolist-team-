@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import {Link} from 'react-router-dom'
 function Comment({ userId }) {
   const commentList = useSelector(state => state.comments.list);
+  const [postcomment, setpostcomment] = useState(commentList);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [commentCount] = useState(4);
+  const commentLength = commentList.length;
+  const maxPage =
+    Math.ceil(commentLength / commentCount) === 0
+      ? 1
+      : Math.ceil(commentLength / commentCount);
+  const lastIndex = currentPage * commentCount;
+  const firstIndex = lastIndex - commentCount;
 
+  React.useEffect(() => {
+    setpostcomment(commentList.slice(firstIndex, lastIndex));
+  }, [currentPage, commentCount]);
   return (
     <div className="container mx-auto h-full">
       <div className="border-2 border-emerald-400 h-3/5">
@@ -19,8 +32,27 @@ function Comment({ userId }) {
             댓글달기
           </button>
         </form>
+        <div className="flex justify-between">
+          <button
+            disabled={currentPage <= 1}
+            onClick={() => {
+              setCurrentPage(currentPage - 1);
+            }}
+          >
+            이전댓글
+          </button>
+          <div>{`${currentPage}/${maxPage} `}</div>
+          <button
+            disabled={currentPage >= maxPage}
+            onClick={() => {
+              setCurrentPage(currentPage + 1);
+            }}
+          >
+            다음 댓글
+          </button>
+        </div>
         <div>
-          {commentList.map(x => {
+          {postcomment.map(x => {
             return (
               <div
                 key={x.id}
