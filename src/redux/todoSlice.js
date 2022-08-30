@@ -1,36 +1,63 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+
+export const fetchTodo = createAsyncThunk(
+	"get/todo",
+	async ({ rejectWithValue }) => {
+		try {
+			const response = await axios.get(
+				"https://teamhomwork.herokuapp.com/todos"
+			);
+			return response;
+		} catch (err) {
+			return rejectWithValue(err.response.data);
+		}
+	}
+);
 
 const todoSlice = createSlice({
-  name: "todos",
-  initialState: {
-    list: [],
-  },
-  reducers: {
-    loadTodoList: (state, action) => {
-      state.list = action.payload;
-    },
-
-    addTodoList: (state, action) => {
-      state.list.push(action.payload);
-    },
-    updateTodoList: (state, action) => {
-      const idx = state.list.findIndex(x => {
-        return x.id === parseInt(action.payload.id);
-      });
-      console.log(action.payload, idx);
-      state.list[idx].title = action.payload.title;
-      state.list[idx].content = action.payload.content;
-      state.list[idx].done = action.payload.done;
-    },
-    deleteTodoList: (state, action) => {
-      const idx = state.list.findIndex(x => {
-        return x.id === parseInt(action.payload);
-      });
-      state.list.splice(idx, 1);
-    },
-  },
+	name: "todos",
+	initialState: {},
+	reducers: {
+		loadTodoList: (state, action) => {
+			state = action.payload;
+		},
+		addTodoList: (state, action) => {
+			state.push(action.payload);
+		},
+		updateTodoList: (state, action) => {
+			const idx = state.findIndex((x) => {
+				return x.id === parseInt(action.payload.id);
+			});
+			state[idx].title = action.payload.title;
+			state[idx].content = action.payload.content;
+			state[idx].done = action.payload.done;
+		},
+		deleteTodoList: (state, action) => {
+			const idx = state.findIndex((x) => {
+				return x.id === parseInt(action.payload);
+			});
+			state.splice(idx, 1);
+		},
+	},
+	extraReducers: {
+		[fetchTodo.pending]: (state, { payload }) => {
+			state.loading = true;
+		},
+		[fetchTodo.fulfilled]: (state, { payload }) => {
+			state.loading = false;
+			state.data = payload.data;
+			state.isSuccess = true;
+		},
+		[fetchTodo.rejected]: (state, { payload }) => {
+			state.message = payload;
+			state.loading = false;
+			state.isSuccess = true;
+		},
+	},
 });
 
 export const { loadTodoList, updateTodoList, addTodoList, deleteTodoList } =
-  todoSlice.actions;
+	todoSlice.actions;
+
 export default todoSlice.reducer;
