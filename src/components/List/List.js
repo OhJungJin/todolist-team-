@@ -1,32 +1,15 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import Card from "components/Card/Card";
+
 function List() {
-  const navigate = useNavigate();
-  return (
-    <div className="flex-1">
-      <div
-        onClick={() => {
-          navigate("/detail/1");
-        }}
-      >
-        1
-      </div>
-      <div
-        onClick={() => {
-          navigate("/detail/2");
-        }}
-      >
-        2
-      </div>
-      <div
-        onClick={() => {
-          navigate("/detail/3");
-        }}
-      >
-        3
-      </div>
-    </div>
-  );
+	return (
+		<>
+			<div className="h-20"></div>
+			<div className="grid grid-cols-3 gap-3 place-items-center">
+				<Card />
+			</div>
+		</>
+	);
 }
 
 export default List;
