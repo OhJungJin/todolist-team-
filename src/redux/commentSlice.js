@@ -1,16 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
+import { api } from "./axios";
 export const fetchComment = createAsyncThunk("get/comment", async arg => {
-  try {
-    const response = await axios.get(
-      `https://teamhomwork.herokuapp.com/comment/?cardNum=${arg}`
-    );
-    console.log(response.data);
-    return response.data;
-  } catch (err) {
-    return console.log(err);
-  }
+  const response = await api.get(`comment/?cardNum=${arg}`);
+  return response.data;
 });
 
 const commentSlice = createSlice({
