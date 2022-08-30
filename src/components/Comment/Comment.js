@@ -12,7 +12,7 @@ function Comment({ userId }) {
       : Math.ceil(commentLength / commentCount);
   const lastIndex = currentPage * commentCount;
   const firstIndex = lastIndex - commentCount;
-
+  console.log(commentList);
   React.useEffect(() => {
     setpostcomment(commentList.slice(firstIndex, lastIndex));
   }, [currentPage, commentCount]);
