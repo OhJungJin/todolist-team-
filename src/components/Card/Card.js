@@ -25,13 +25,13 @@ function Card() {
 			{todos &&
 				todos.map((todo) => (
 					<div
-						className="w-11/12 h-24 m-2 bg-gray-100"
+						className="w-11/12 h-40 p-4 m-2 transition duration-300 bg-gray-100 shadow-xl rounded-3xl hover:bg-green-200 "
 						onClick={() => {
 							navigate(`/detail/${todo.id}`);
 						}}
 						key={todo.id}
 					>
-						<div>{todo.title}</div>
+						<div className="text-2xl font-bold">{todo.title}</div>
 						<div>{todo.content}</div>
 					</div>
 				))}
