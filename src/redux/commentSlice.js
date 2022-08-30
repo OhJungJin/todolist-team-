@@ -4,7 +4,7 @@ import axios from "axios";
 export const fetchComment = createAsyncThunk("get/comment", async arg => {
   try {
     const response = await axios.get(
-      `https://teamhomwork.herokuapp.com/comment/?userID=${arg}`
+      `https://teamhomwork.herokuapp.com/comment/?cardNum=${arg}`
     );
     console.log(response.data);
     return response.data;

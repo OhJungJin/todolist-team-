@@ -14,14 +14,15 @@ import {
 } from "redux/todoSlice";
 
 export default function Detail() {
-  React.useEffect(() => {
-    dispatch(fetchTodo());
-    dispatch(fetchComment(param.id));
-  }, []);
   const dispatch = useDispatch();
   const param = useParams(3);
   const data = useSelector(state => state.todos);
   const todos = data.data;
+
+  React.useEffect(() => {
+    dispatch(fetchTodo());
+    dispatch(fetchComment(param.id));
+  }, []);
 
   const myTodo = todos?.filter(x => {
     return x.id === parseInt(param.id);
@@ -36,7 +37,7 @@ export default function Detail() {
     dispatch(updateTodoThunk(data));
     dispatch(updateTodoList(data));
   };
-
+  if (!todos) return null;
   return (
     <div>
       {isComment === true ? (
