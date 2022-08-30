@@ -16,17 +16,20 @@ function Card() {
 
 	let navigate = useNavigate();
 
-	function moveDetail() {
-		navigate(`/detail/1`);
+	function moveDetail(id) {
+		navigate(`/detail/${id}`);
 	}
 
+	console.log(todos);
 	return (
 		<>
 			{todos &&
 				todos.map((todo) => (
 					<div
 						className="w-11/12 h-24 m-2 bg-gray-100"
-						onClick={moveDetail}
+						onClick={() => {
+							moveDetail(todo.id);
+						}}
 						key={todo.id}
 					>
 						<div>{todo.id}</div>

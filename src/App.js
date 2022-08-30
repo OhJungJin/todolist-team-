@@ -21,6 +21,7 @@ function App() {
 			<Route path="/" element={<Home />}></Route>
 			<Route path="/add" element={<AddTodoList />}></Route>
 			<Route path="/detail/:id" element={<Detail />}></Route>
+			<Route path="/detail" element={<Detail />}></Route>
 		</Routes>
 	);
 }
