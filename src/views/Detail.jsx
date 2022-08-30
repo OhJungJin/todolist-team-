@@ -19,31 +19,31 @@ export default function Detail() {
   const data = useSelector(state => state.todos);
   const todos = data.data;
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(fetchTodo());
     dispatch(fetchComment(param.id));
+    console.log("새로고침 되었습ㄴㄴ");
   }, []);
-
-  const myTodo = todos?.filter(x => {
-    return x.id === parseInt(param.id);
-  });
 
   const [isComment, setComment] = useState(true);
   const [iscontent, setcontent] = useState(true);
-  const [updateContent, setupdateContent] = useState(myTodo[0].content);
+  const [updateContent, setupdateContent] = useState("");
   const navigate = useNavigate();
-
+  const myTodo = todos?.filter(x => {
+    return x.id === parseInt(param.id);
+  });
+  if (!myTodo) return null;
   const updateTodoContent = data => {
     dispatch(updateTodoThunk(data));
     dispatch(updateTodoList(data));
   };
-  if (!todos) return null;
+
   return (
     <div>
       {isComment === true ? (
         <div className="container mx-auto h-screen">
           <div className="flex justify-around p-4 w-3/5 mx-auto my-4">
-            <p className="w-3/5 text-2xl">{myTodo[0].title}</p>
+            <p className="w-3/5 text-2xl">{myTodo[0]?.title}</p>
             <button
               className="w-1/5 border-2"
               onClick={() => {
@@ -64,7 +64,7 @@ export default function Detail() {
           <div className="h-2/3 w-3/4 mx-auto border-4 border-sky-600 rounded-lg grid content-between">
             {iscontent === true ? (
               <div>
-                <p className="mt-4">{myTodo[0].content}</p>
+                <p className="mt-4">{myTodo[0]?.content}</p>
               </div>
             ) : (
               <div>
@@ -103,12 +103,12 @@ export default function Detail() {
                 className=" border-2 border-black rounded-lg p-2"
                 onClick={() => {
                   dispatch(
-                    updateTodoThunk({ id: param.id, done: !myTodo[0].done })
+                    updateTodoThunk({ id: param.id, done: !myTodo[0]?.done }) //여기서 취소 완료 변경
                   );
-                  toggleTodo({ id: param.id, done: !myTodo[0].done });
+                  toggleTodo({ id: param.id, done: !myTodo[0]?.done });
                 }}
               >
-                {myTodo[0].done ? "취소" : "완료"}
+                {myTodo[0]?.done ? "취소" : "완료"}
               </button>
             </div>
           </div>
@@ -116,7 +116,7 @@ export default function Detail() {
       ) : (
         <div className="container mx-auto h-screen">
           <div className="flex justify-around p-1 w-3/5 mx-auto my-4">
-            <p className="w-3/5 text-2xl">{myTodo[0].title}</p>
+            <p className="w-3/5 text-2xl">{myTodo[0]?.title}</p>
             <button
               className="w-1/5 border-2"
               onClick={() => {
@@ -137,7 +137,7 @@ export default function Detail() {
           <div className="grid content-between h-48 w-3/4 mx-auto border-4 border-sky-600 border-solid rounded-lg ">
             {iscontent === true ? (
               <div>
-                <p className="mt-4">{myTodo[0].content}</p>
+                <p className="mt-4">{myTodo[0]?.content}</p>
               </div>
             ) : (
               <div>
@@ -176,12 +176,12 @@ export default function Detail() {
                 className=" border-2 border-black rounded-lg p-2"
                 onClick={() => {
                   dispatch(
-                    updateTodoThunk({ id: param.id, done: !myTodo[0].done })
+                    updateTodoThunk({ id: param.id, done: !myTodo[0]?.done })
                   );
-                  toggleTodo({ id: param.id, done: !myTodo[0].done });
+                  toggleTodo({ id: param.id, done: !myTodo[0]?.done });
                 }}
               >
-                {myTodo[0].done ? "취소" : "완료"}
+                {myTodo[0]?.done ? "취소" : "완료"}
               </button>
             </div>
           </div>

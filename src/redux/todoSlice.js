@@ -1,17 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import axios from "axios";
-
+import { api } from "./axios";
 export const fetchTodo = createAsyncThunk("get/todo", async () => {
-  const response = await axios.get("https://teamhomwork.herokuapp.com/todos");
+  const response = await api.get("todos");
   return response;
 });
 
 export const updateTodoThunk = createAsyncThunk("update/todo", async data => {
-  const res = await axios.patch(
-    `https://teamhomwork.herokuapp.com/Todos/${data.id}`,
-    data
-  );
+  const res = await api.patch(`todos/${data.id}`, data);
   return res.data;
 });
 
