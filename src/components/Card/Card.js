@@ -25,7 +25,7 @@ function Card() {
 			{todos &&
 				todos.map((todo) => (
 					<div
-						className="w-11/12 h-40 m-2 p-4 rounded-3xl bg-gray-100 shadow-xl hover:bg-green-200 transition duration-300						"
+						className="w-11/12 h-40 p-4 m-2 transition duration-300 bg-gray-100 shadow-xl rounded-3xl hover:bg-green-200 "
 						onClick={() => {
 							navigate(`/detail/${todo.id}`);
 						}}
