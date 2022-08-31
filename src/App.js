@@ -5,7 +5,6 @@ import { Routes, Route } from "react-router-dom";
 import Home from "views/Home";
 import AddTodoList from "views/AddTodoList";
 import Detail from "views/Detail";
-import EditComment from "components/Comment/EditComment";
 import { loadTodoList } from "./redux/todoSlice";
 
 function App() {
@@ -26,7 +25,6 @@ function App() {
       <Route path="/" element={<Home />}></Route>
       <Route path="/add" element={<AddTodoList />}></Route>
       <Route path="/detail/:id" element={<Detail />}></Route>
-      <Route path="/editComment" element={<EditComment />}></Route>
     </Routes>
   );
 }
