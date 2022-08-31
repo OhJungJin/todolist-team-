@@ -2,7 +2,7 @@ import Layout from "components/Layout.js/Layout";
 import React, { useState, useEffect } from "react";
 import Comment from "components/Comment/Comment";
 import { useParams, useNavigate, Link } from "react-router-dom";
-
+import useContent from "hooks/useContent";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchComment } from "redux/commentSlice";
@@ -16,7 +16,7 @@ import {
 export default function Detail() {
   const dispatch = useDispatch();
   const param = useParams(3);
-  const data = useSelector((state) => state.todos);
+  const data = useSelector(state => state.todos);
   const todos = data.data;
 
   useEffect(() => {
@@ -24,16 +24,18 @@ export default function Detail() {
     dispatch(fetchComment(param.id));
     console.log("새로고침 되었습ㄴㄴ");
   }, []);
+  const myTodo = todos?.filter(x => {
+    return x.id === parseInt(param.id);
+  });
+  const [datas, onChange] = useContent({
+    content: myTodo[0]?.content,
+  });
 
   const [isComment, setComment] = useState(true);
   const [iscontent, setcontent] = useState(true);
-  const [updateContent, setupdateContent] = useState("");
   const navigate = useNavigate();
-  const myTodo = todos?.filter((x) => {
-    return x.id === parseInt(param.id);
-  });
-  if (!myTodo) return null;
-  const updateTodoContent = (data) => {
+
+  const updateTodoContent = data => {
     dispatch(updateTodoThunk(data));
     dispatch(updateTodoList(data));
   };
@@ -42,7 +44,7 @@ export default function Detail() {
     if (window.confirm("삭제 하시겠습니까?")) {
       fetch(`https://teamhomwork.herokuapp.com/todos/${param.id}`, {
         method: "DELETE",
-      }).then((res) => {
+      }).then(res => {
         if (res.ok) {
         }
       });
@@ -61,12 +63,21 @@ export default function Detail() {
               className="w-1/5 border-2"
               onClick={() => {
                 setcontent(!iscontent);
-              }}>
+              }}
+            >
               {iscontent === true ? "수정하기" : "수정취소"}
             </button>
             <button className="w-1/5 border-2" onClick={deleteContent}>
               삭제하기
             </button>
+            <p
+              className="font-bold text-2xl"
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              X
+            </p>
           </div>
           <div className="grid content-between w-3/4 mx-auto border-4 rounded-lg h-2/3 border-sky-600">
             {iscontent === true ? (
@@ -77,19 +88,19 @@ export default function Detail() {
               <div>
                 <input
                   className="mt-4"
-                  value={updateContent}
-                  onChange={(event) => {
-                    setupdateContent(event.target.value);
-                  }}
+                  name="content"
+                  value={datas?.content}
+                  onChange={onChange}
                 />
                 <button
                   onClick={() => {
                     updateTodoContent({
                       id: param.id,
-                      content: updateContent,
+                      content: datas.content,
                     });
                     setcontent(!iscontent);
-                  }}>
+                  }}
+                >
                   수정 완료
                 </button>
               </div>
@@ -101,7 +112,8 @@ export default function Detail() {
                 className="p-2 border-2 border-black rounded-lg "
                 onClick={() => {
                   setComment(false);
-                }}>
+                }}
+              >
                 댓글보기
               </button>
               <button
@@ -111,7 +123,8 @@ export default function Detail() {
                     updateTodoThunk({ id: param.id, done: !myTodo[0]?.done }) //여기서 취소 완료 변경
                   );
                   toggleTodo({ id: param.id, done: !myTodo[0]?.done });
-                }}>
+                }}
+              >
                 {myTodo[0]?.done ? "취소" : "완료"}
               </button>
             </div>
@@ -125,12 +138,21 @@ export default function Detail() {
               className="w-1/5 border-2"
               onClick={() => {
                 setcontent(!iscontent);
-              }}>
+              }}
+            >
               {iscontent === true ? "수정하기" : "수정취소"}
             </button>
             <button className="w-1/5 border-2" onClick={deleteContent}>
               삭제하기
             </button>
+            <p
+              className="font-bold text-2xl"
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              X
+            </p>
           </div>
           <div className="grid content-between w-3/4 h-48 mx-auto border-4 border-solid rounded-lg border-sky-600 ">
             {iscontent === true ? (
@@ -141,19 +163,19 @@ export default function Detail() {
               <div>
                 <input
                   className="mt-4"
-                  value={updateContent}
-                  onChange={(event) => {
-                    setupdateContent(event.target.value);
-                  }}
+                  name="content"
+                  value={datas.content}
+                  onChange={onChange}
                 />
                 <button
                   onClick={() => {
                     updateTodoContent({
                       id: param.id,
-                      content: updateContent,
+                      content: datas.content,
                     });
                     setcontent(!iscontent);
-                  }}>
+                  }}
+                >
                   수정 완료
                 </button>
               </div>
@@ -165,7 +187,8 @@ export default function Detail() {
                 className="p-2 border-2 border-black rounded-lg "
                 onClick={() => {
                   setComment(true);
-                }}>
+                }}
+              >
                 댓글닫기
               </button>
               <button
@@ -175,7 +198,8 @@ export default function Detail() {
                     updateTodoThunk({ id: param.id, done: !myTodo[0]?.done })
                   );
                   toggleTodo({ id: param.id, done: !myTodo[0]?.done });
-                }}>
+                }}
+              >
                 {myTodo[0]?.done ? "취소" : "완료"}
               </button>
             </div>
