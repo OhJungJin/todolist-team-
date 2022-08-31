@@ -14,6 +14,7 @@ import {
 } from "redux/todoSlice";
 
 export default function Detail() {
+	const BASE_URL = process.env.REACT_APP_BASE_URL;
 	const dispatch = useDispatch();
 	const param = useParams(3);
 	const data = useSelector((state) => state.todos);
@@ -22,7 +23,6 @@ export default function Detail() {
 	useEffect(() => {
 		dispatch(fetchTodo());
 		dispatch(fetchComment(param.id));
-		console.log("새로고침 되었습ㄴㄴ");
 	}, []);
 	const myTodo = todos?.filter((x) => {
 		return x.id === parseInt(param.id);
@@ -42,7 +42,7 @@ export default function Detail() {
 
 	const deleteContent = () => {
 		if (window.confirm("삭제 하시겠습니까?")) {
-			fetch(`https://teamhomwork.herokuapp.com/todos/${param.id}`, {
+			fetch(`${BASE_URL}todos/${param.id}`, {
 				method: "DELETE",
 			}).then((res) => {
 				if (res.ok) {
@@ -55,10 +55,11 @@ export default function Detail() {
 
 	const deleteCommeent = (id) => {
 		if (window.confirm("삭제 하시겠습니까?")) {
-			fetch(`https://teamhomwork.herokuapp.com/comment/${id}`, {
+			fetch(`${BASE_URL}comment/${id}`, {
 				method: "DELETE",
 			}).then((res) => {
 				if (res.ok) {
+					return window.location.reload();
 				}
 			});
 			alert("삭제 되었습니다.");
