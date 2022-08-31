@@ -7,7 +7,6 @@ export const fetchComment = createAsyncThunk("get/comment", async (arg) => {
 });
 
 export const updateCommentThunk = createAsyncThunk("update/comment", async ({ id, payload }) => {
-  console.log('payload', payload)
   const response = await api.patch(`comment/${id}`, payload);
   return response.data;
 });
@@ -18,7 +17,6 @@ const commentSlice = createSlice({
   initialState: {
     isLoading: false,
     commentList: [],
-    comment: {}
   },
   extraReducers: {
     [fetchComment.fulfilled]: (state, { payload }) => {
@@ -29,11 +27,11 @@ const commentSlice = createSlice({
     },
     [updateCommentThunk.fulfilled]: (state, data) => {
       state.isLoading = false;
-      state.commentList = state.commentList.map(commnet => {
-        if(commnet.id === data.payload.id) {
+      state.commentList = state.commentList.map(comment => {
+        if(comment.id === data.payload.id) {
           return data.payload
         } else {
-          return commnet
+          return comment
         }
       })
     },

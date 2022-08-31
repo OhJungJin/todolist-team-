@@ -51,9 +51,7 @@ function Comment({ userId, deleteCommeent }) {
             postCommentList.map((postComment) => (
               <CommentItem
                 key={postComment.id}
-                postCommentList={postCommentList}
                 postComment={postComment}
-                setPostCommentList={setPostCommentList}
                 deleteCommeent={deleteCommeent}
               />
             ))
