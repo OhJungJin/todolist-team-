@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { api } from "./axios";
-export const fetchComment = createAsyncThunk("get/comment", async arg => {
+export const fetchComment = createAsyncThunk("get/comment", async (arg) => {
   const response = await api.get(`comment/?cardNum=${arg}`);
   return response.data;
 });
@@ -11,7 +11,15 @@ const commentSlice = createSlice({
   initialState: {
     list: [],
   },
-  reducers: {},
+  reducers: {
+    updateComment: (state, action) => {
+      const idx = state.data.findIndex((x) => {
+        return x.id === parseInt(action.payload.id);
+      });
+      console.log(action.payload, idx);
+      state.data[idx].content = action.payload.content;
+    },
+  },
   extraReducers: {
     [fetchComment.fulfilled]: (state, { payload }) => {
       state.list = payload;
@@ -20,3 +28,4 @@ const commentSlice = createSlice({
 });
 
 export default commentSlice.reducer;
+export const {updateComment} = commentSlice.actions
