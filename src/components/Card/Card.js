@@ -16,10 +16,6 @@ function Card() {
 
 	let navigate = useNavigate();
 
-	// function moveDetail(id) {
-	// 	navigate(`/detail/${id}`);
-	// }
-
 	return (
 		<>
 			{todos &&
