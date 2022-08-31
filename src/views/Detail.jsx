@@ -48,7 +48,6 @@ export default function Detail() {
       });
       alert("삭제 되었습니다. 홈화면으로 이동합니다.");
       navigate(-1);
-      console.log("todos2", todos);
     }
   };
 
