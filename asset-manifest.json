@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/OhJungJin/todolist-team-/static/css/main.e7232e33.css",
+    "main.js": "/OhJungJin/todolist-team-/static/js/main.1c625743.js",
+    "index.html": "/OhJungJin/todolist-team-/index.html",
+    "main.e7232e33.css.map": "/OhJungJin/todolist-team-/static/css/main.e7232e33.css.map",
+    "main.1c625743.js.map": "/OhJungJin/todolist-team-/static/js/main.1c625743.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e7232e33.css",
+    "static/js/main.1c625743.js"
+  ]
+}
