@@ -3,9 +3,7 @@ import { useDispatch } from "react-redux";
 import { updateCommentThunk } from "redux/commentSlice";
 
 export default function CommentItem({
-  postCommentList,
   postComment,
-  setPostCommentList,
   deleteCommeent,
 }) {
   const [isEditMode, setIsEditMode] = useState(false);
